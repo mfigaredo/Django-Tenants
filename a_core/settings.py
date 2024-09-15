@@ -61,6 +61,7 @@ TENANT_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'colorfield',
     
     'a_home',
     'a_users',
@@ -175,6 +176,18 @@ STATICFILES_DIRS = [ BASE_DIR / 'static' ]
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media' 
+MULTITENANT_RELATIVE_MEDIA_ROOT = "tenants/%s"
+
+STORAGES = {
+    "default": {
+        # "BACKEND": "django.core.files.storage.FileSystemStorage",
+        # "BACKEND": "django_tenants.files.storage.TenantFileSystemStorage",
+        "BACKEND": "a_home.storage.CustomSchemaStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
