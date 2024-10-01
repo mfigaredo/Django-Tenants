@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.db import connection
 from .models import Item
 
 def home_view(request):
     items = Item.objects.all()
     context = {
         'items': items,
+        'schema': connection.schema_name,
     }
     return render(request, 'home.html', context)
 

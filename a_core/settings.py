@@ -15,7 +15,7 @@ from environ import Env
 env = Env()
 env.read_env()
 ENVIRONMENT = env('ENVIRONMENT', default='development')
-ENVIRONMENT = 'production'
+# ENVIRONMENT = 'production'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -210,17 +210,30 @@ AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 AWS_S3_FILE_OVERWRITE = False
 AWS_LOCATION = 'media'
 
-STORAGES = {
-    "default": {
-        # "BACKEND": "django.core.files.storage.FileSystemStorage",
-        # "BACKEND": "django_tenants.files.storage.TenantFileSystemStorage",
-        # "BACKEND": "a_home.storage.CustomSchemaStorage",
-        "BACKEND": "storages.backends.s3.S3Storage",
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    },
-}
+if ENVIRONMENT == 'development':
+    STORAGES = {
+        "default": {
+            # "BACKEND": "django.core.files.storage.FileSystemStorage",
+            # "BACKEND": "django_tenants.files.storage.TenantFileSystemStorage",
+            "BACKEND": "a_home.storage.CustomSchemaStorage",
+            # "BACKEND": "storages.backends.s3.S3Storage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+else:
+    STORAGES = {
+        "default": {
+            # "BACKEND": "django.core.files.storage.FileSystemStorage",
+            # "BACKEND": "django_tenants.files.storage.TenantFileSystemStorage",
+            # "BACKEND": "a_home.storage.CustomSchemaStorage",
+            "BACKEND": "storages.backends.s3.S3Storage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
